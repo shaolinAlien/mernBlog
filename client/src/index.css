@@ -1,0 +1,17 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+
+    font-family: 'Tektur', cursive;
+    background: #141E30;
+    /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right #243B55, #141E30);
+    /* chrome 10-25, safari 5.1-6 */
+    background: linear-gradient(to right, #243B55, #141E30);
+    /* ... */
+    min-height: 100vh;
+  }
+}
