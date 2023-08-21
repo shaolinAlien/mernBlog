@@ -1,19 +1,19 @@
 import Post from '../models/Post.js'
 import User from '../models/User.js'
-import path, {dirname} from 'path'
+import path, { dirname } from 'path'
 import { fileURLToPath } from 'url'
 
 //Create Post
 export const createPost = async (req, res) => {
    try {
-      const {title, text} = req.body 
+      const { title, text } = req.body
       const user = await User.findById(req.userId)
       if (req.files) {
-         let fileName = Date.now().toString() + req.files.image.name 
+         let fileName = Date.now().toString() + req.files.image.name
          const __dirname = dirname(fileURLToPath(import.meta.url))
          req.files.image.mv(path.join(__dirname, '..', 'uploads', fileName))
 
-         const newPostWithImage = new Post ({
+         const newPostWithImage = new Post({
             username: user.username,
             title,
             text,
@@ -23,7 +23,7 @@ export const createPost = async (req, res) => {
 
          await newPostWithImage.save()
          await User.findByIdAndUpdate(req.userId, {
-            $push: {posts: newPostWithImage},
+            $push: { posts: newPostWithImage },
          })
 
          return res.json(newPostWithImage)
@@ -31,7 +31,7 @@ export const createPost = async (req, res) => {
 
       const newPostWithoutImage = new Post({
          username: user.username,
-         title, 
+         title,
          text,
          imgUrl: '',
          author: req.userId
@@ -39,11 +39,11 @@ export const createPost = async (req, res) => {
 
       await newPostWithoutImage.save()
       await User.findByIdAndUpdate(req.userId, {
-         $push: {posts: newPostWithoutImage}
+         $push: { posts: newPostWithoutImage }
       })
       res.json(newPostWithoutImage)
    } catch (error) {
-      res.json({message: 'Что то пошло не так'})
+      res.json({ message: 'Что то пошло не так' })
    }
 }
 
@@ -54,11 +54,24 @@ export const getAll = async (req, res) => {
       const posts = await Post.find().sort('-createdAt')
       const popularPosts = await Post.find().limit(5).sort('-views')
 
-      if(!posts) {
-         return res.json({message: 'Постов нет'})
+      if (!posts) {
+         return res.json({ message: 'Постов нет' })
       }
-      res.json({posts, popularPosts})
+      res.json({ posts, popularPosts })
    } catch (error) {
-      res.json({message: "Что то пошло не так"})
+      res.json({ message: "Что то пошло не так" })
+   }
+}
+
+//Get By Id
+
+export const getById = async (req, res) => {
+   try {
+      const post = await Post.findByIdAndUpdate(req.params.id, {
+         $inc: { views: 1 },
+      })
+      res.json(post)
+   } catch (error) {
+      res.json({ message: "Что то пошло не так" })
    }
 }
