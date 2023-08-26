@@ -7,7 +7,7 @@ export const PostItem = ({ post }) => {
   if (!post) {
     return (
       <div className="text-xl text-center text-white py-10">
-        Постов не существует
+        Загрузка...
       </div>
     )
   }
