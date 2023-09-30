@@ -43,7 +43,7 @@ export const createPost = async (req, res) => {
       })
       res.json(newPostWithoutImage)
    } catch (error) {
-      res.json({ message: 'Что то пошло не так' })
+      res.json({ message: 'Что то пошлоо не так' })
    }
 }
 
@@ -59,7 +59,7 @@ export const getAll = async (req, res) => {
       }
       res.json({ posts, popularPosts })
    } catch (error) {
-      res.json({ message: "Что то пошло не так" })
+      res.json({ message: "Что тоо пошло не так" })
    }
 }
 
@@ -72,7 +72,7 @@ export const getById = async (req, res) => {
       })
       res.json(post)
    } catch (error) {
-      res.json({ message: "Что то пошло не так" })
+      res.json({ message: "Что то пошло нее так" })
    }
 }
 
@@ -82,12 +82,56 @@ export const getMyPosts = async (req, res) => {
    try {
       const user = await User.findById(req.userId)
       const list = await Promise.all(
-         user.posts.map(post => {
+         user.posts.map((post) => {
             return Post.findById(post._id)
          }),
       )
       res.json(list)
    } catch (error) {
-      res.json({ message: "Что то пошло не так" })
+      res.json({ message: "Что то пошло неее так" })
+   }
+}
+
+//Remove Post
+
+export const removePost = async (req, res) => {
+   try {
+      const post = await Post.findByIdAndDelete(req.params.id)
+      if(!post) return res.json({message: 'Такого поста не существует'})
+
+      await User.findByIdAndUpdate(req.userId, {
+         $pull: {posts: req.params.id}
+      })
+
+      res.json({message: 'Пост был удален'})
+   } catch (error) {
+      res.json({ message: "Что то пошло не такк" })
+   }
+}
+
+//Update Post
+
+export const updatePost = async (req, res) => {
+   try {
+      //Получаем тайтл текст и айди из реквест боди
+      const { title, text, id } = req.body
+      //Ищем этот пост
+      const post = await Post.findById(id)
+
+      if (req.files) {
+         let fileName = Date.now().toString() + req.files.image.name
+         const __dirname = dirname(fileURLToPath(import.meta.url))
+         req.files.image.mv(path.join(__dirname, '..', 'uploads', fileName))
+         post.imgUrl = fileName || ''
+      }
+      
+      post.title = title
+      post.text = text
+
+      await post.save()
+
+      res.json(post)
+   } catch (error) {
+      res.json({ message: "Что то пошло не таккк" })
    }
 }
