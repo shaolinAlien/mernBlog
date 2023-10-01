@@ -75,7 +75,8 @@ export const EditPostPage = () => {
 
       <label className='text-xs text-white opacity-70'>
         Заголовок поста:
-        <input type='text'
+        <input 
+          type='text'
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder='Заголовок'
@@ -90,6 +91,7 @@ export const EditPostPage = () => {
           onChange={(e) => setText(e.target.value)}
           className='mt-1 text-black w-full rounded-lg bg-gray-400 border py-1 px-2 text-xs outline-none resize-none h-40 placeholder:text-gray-700' />
       </label>
+      
       <div className='flex gap-8 items-center justify-center mt-4'>
         <button
           onClick={submitHandler}

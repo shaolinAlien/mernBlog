@@ -102,7 +102,8 @@ export const PostPage = () => {
               <div className='flex gap-3 mt-4'>
                 <button
                   className='flex items-center justify-center gap-2 text-white opacity-50'>
-                  <Link to={`${params.id}/edit`}>
+                  <Link 
+                    to={`/${params.id}/edit`}>
                     <AiTwotoneEdit />
                   </Link>
                 </button>

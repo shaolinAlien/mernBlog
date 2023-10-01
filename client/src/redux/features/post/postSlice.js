@@ -34,9 +34,11 @@ export const removePost = createAsyncThunk('post/removePost', async (id) => {
    }
 })
 
-export const updatePost = createAsyncThunk('post/updatePost', async (updatedPost) => {
+export const updatePost = createAsyncThunk(
+   'post/updatePost', 
+   async (updatedPost) => {
    try {
-      const {data} = await axios.put(`/posts/${updatedPost.id}`, updatedPost)
+      const {data} = await axios.put(`/posts/${updatedPost.id}`, updatedPost, )
       return data
    } catch (error) {
       console.log(error)
