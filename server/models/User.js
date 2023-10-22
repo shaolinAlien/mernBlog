@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
-   username: {
+const UserSchema = new mongoose.Schema(
+   {username: {
       type: String,
       required: true,
       unique: true
@@ -13,7 +13,7 @@ const UserSchema = new mongoose.Schema({
    posts: [
       {
          type: mongoose.Schema.Types.ObjectId,
-         ref: 'posts',
+         ref: 'Post',
       },
    ],
 },

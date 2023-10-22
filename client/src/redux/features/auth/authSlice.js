@@ -63,6 +63,60 @@ export const authSlice = createSlice({
          state.status = null
       }
    },
+   /* extraReducers: (builder) => {
+      builder
+         //Register user
+         //запрос отправляется
+         .addCase(registerUser.pending, (state) => {
+            state.isLoading = true
+            state.status = null
+         })
+         //запрос выполнен
+         .addCase(registerUser.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.status = action.payload.message
+            state.user = action.payload.user
+            state.token = action.payload.token
+         })
+         .addCase(registerUser.rejectWithValue, (state, action) => {
+            state.status = action.payload.message
+            state.isLoading = false
+         })
+         //Login user
+         .addCase(loginUser.pending, (state) => {
+            state.isLoading = true
+            state.status = null
+         })
+         //запрос выполнен
+         .addCase(loginUser.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.status = action.payload.message
+            state.user = action.payload.user
+            state.token = action.payload.token
+         })
+         //возникла ошибка
+         .addCase(loginUser.rejectWithValue, (state, action) => {
+            state.status = action.payload.message
+            state.isLoading = false
+         })
+         //Проверка авторизации
+         .addCase(getMe.pending, (state) => {
+            state.isLoading = true
+            state.status = null
+         })
+         //запрос выполнен
+         .addCase(getMe.fulfilled, (state, action) => {
+            state.isLoading = false
+            state.status = null
+            state.user = action.payload?.user
+            state.token = action.payload?.token
+         })
+         //возникла ошибка
+         .addCase(getMe.rejectWithValue, (state, action) => {
+            state.status = action.payload.message
+            state.isLoading = false
+         })
+   } */
    extraReducers: {
       //Register user
       //запрос отправляется
@@ -78,7 +132,7 @@ export const authSlice = createSlice({
          state.token = action.payload.token
       },
       //возникла ошибка
-      [loginUser.rejectedWithValue]: (state, action) => {
+      [registerUser.rejectWithValue]: (state, action) => {
          state.status = action.payload.message
          state.isLoading = false
       },
@@ -95,7 +149,7 @@ export const authSlice = createSlice({
          state.token = action.payload.token
       },
       //возникла ошибка
-      [loginUser.rejectedWithValue]: (state, action) => {
+      [loginUser.rejectWithValue]: (state, action) => {
          state.status = action.payload.message
          state.isLoading = false
       },
@@ -112,7 +166,7 @@ export const authSlice = createSlice({
          state.token = action.payload?.token
       },
       //возникла ошибка
-      [getMe.rejectedWithValue]: (state, action) => {
+      [getMe.rejectWithValue]: (state, action) => {
          state.status = action.payload.message
          state.isLoading = false
       },
